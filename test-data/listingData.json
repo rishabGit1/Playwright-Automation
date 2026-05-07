@@ -1,0 +1,26 @@
+{
+    "address": "123 Main St, Springfield, IL 62704",
+    "ownerName": "John Doe",
+    "propertyType": "Single Family",
+    "units": "1",
+    "vacantUnits": "10",
+    "monthlyRent": "2500",
+    "services": ["Professional Marketing", "Monthly Rent Collection", "Eviction Management"],
+    "dueDiligence": "21",
+    "inspection": "Yes",
+    "bidDuration": "5",
+    "experience": "3 years",
+    "software": "AppFolio",
+    "scopeOfWork": "Full service property management including marketing, tenant screening, and maintenance coordination.",
+    "contractLength": "1 year",
+    "compensationType": "Flat Fee",
+    "compensationAmount": "1000",
+    "tenantFinding": "Percentage of the First Months Rent",
+    "tenantFindingAmount": "5",
+    "leaseRenewal": "None",
+    "leaseRenewalAmount": "250",
+    "photoPath": "./test-assets/sample-photo.png",
+    "videoPath": null,
+    "signaturePath": "./test-assets/sample-photo.png"
+}
+ 

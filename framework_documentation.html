@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paxtrac Automation Framework Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #818cf8;
+            --primary-dark: #6366f1;
+            --secondary: #fb7185;
+            --bg: #020617;
+            --card-bg: #0f172a;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --border: #1e293b;
+            --code-bg: #1e293b;
+            --accent: #2dd4bf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-number {
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            margin-right: 15px;
+            box-shadow: 0 0 15px rgba(129, 140, 248, 0.4);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+        }
+
+        h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .method-box {
+            border-left: 4px solid var(--primary);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            background: #1e293b;
+            border-radius: 0 8px 8px 0;
+            transition: transform 0.2s;
+        }
+
+        .method-box:hover {
+            transform: translateX(5px);
+            background: #334155;
+        }
+
+        .method-name {
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .params {
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .param-tag {
+            background: #0f172a;
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+        }
+
+        .description {
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--secondary);
+        }
+
+        .flow-visual {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .info-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: rgba(45, 212, 191, 0.1);
+            color: var(--accent);
+            margin-bottom: 15px;
+            border: 1px solid rgba(45, 212, 191, 0.2);
+        }
+
+        .dependencies {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text);
+        }
+
+        th {
+            background: #1e293b;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+
+        td, th {
+            padding: 15px;
+            border: 1px solid var(--border);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Framework Knowledge Base</h1>
+        <p class="subtitle">Complete guide to the Paxtrac Automation Architecture</p>
+    </header>
+
+    <!-- STEP 1: BASE CLASS -->
+    <h2 class="section-title"><span class="section-number">1</span> The Base Class (BasePage.js)</h2>
+    <section class="card">
+        <span class="info-tag">Foundation</span>
+        <p style="margin-bottom: 20px;">The <b>BasePage</b> is the "Grandparent" class. It contains generic browser interactions that are NOT specific to any page.</p>
+
+        <h3 style="color: #4b5563; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px;">Deep Dive: Every Word Explained</h3>
+        
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>class BasePage { ... }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>class:</b> A blueprint for creating objects. It groups data and functions together.</li>
+                <li><b>BasePage:</b> The name we gave this blueprint. "Base" implies it's a starting point for others.</li>
+            </ul>
+        </div>
+
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>constructor(page) { this.page = page; }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>constructor:</b> A special function that runs <i>once</i> when you create the page.</li>
+                <li><b>page (parameter):</b> The actual browser tab provided by Playwright.</li>
+                <li><b>this.page:</b> "this" refers to the current object. We are saving the browser tab so all other methods can find it.</li>
+            </ul>
+        </div>
+
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>async navigate(url) { await this.page.goto(url); }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>async:</b> Tells JavaScript this function takes time (it's "asynchronous").</li>
+                <li><b>url:</b> The web address (e.g., 'https://google.com').</li>
+                <li><b>await:</b> Tells the code to "Pause and Wait" until the website actually loads before moving to the next line.</li>
+                <li><b>goto:</b> A built-in Playwright command to change the browser URL.</li>
+            </ul>
+        </div>
+
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>async fillInput(selector, text) { await this.page.locator(selector).fill(text); }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>selector:</b> The unique ID or XPath of the input field.</li>
+                <li><b>text:</b> The data you want to type.</li>
+                <li><b>locator:</b> Finds the exact element on the screen.</li>
+                <li><b>fill:</b> Clears the field and types your text instantly.</li>
+            </ul>
+        </div>
+
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>async clickButton(selector) { await this.page.locator(selector).click(); }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>click():</b> Simulates a mouse click on the element found by the locator.</li>
+            </ul>
+        </div>
+
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>async wait(seconds) { await this.page.waitForTimeout(seconds * 1000); }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>seconds:</b> How long you want the script to pause.</li>
+                <li><b>waitForTimeout:</b> A built-in command that pauses the execution.</li>
+                <li><b>* 1000:</b> Converts seconds to milliseconds (which is what Playwright understands).</li>
+            </ul>
+        </div>
+
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>module.exports = BasePage;</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>module.exports:</b> The "Shipping Label". It allows other files (like SignupPage) to <code>require</code> and use this class.</li>
+            </ul>
+        </div>
+
+        <h3 style="margin-top: 30px;">Framework Dependencies</h3>
+        <p style="font-size: 0.95rem; color: var(--text-light);">The BasePage is the "Parent" in the <b>Page Object Model (POM)</b>. Its dependencies are:</p>
+        <ul class="dependency-list">
+            <li><b>Playwright Engine:</b> It depends on the <code>page</code> object to talk to the browser.</li>
+            <li><b>Child Pages:</b> <code>SignupPage</code> depends on BasePage to perform clicks and typing.</li>
+            <li><b>Tests:</b> The <code>spec.js</code> files indirectly depend on it through the Page classes.</li>
+        </ul>
+    </section>
+
+    <!-- STEP 2: PAGE CLASSES -->
+    <h2 class="section-title"><span class="section-number">2</span> Page Classes (SignupPage.js)</h2>
+    <section class="card">
+        <span class="info-tag">Specialist</span>
+        <p style="margin-bottom: 20px;">The <b>SignupPage</b> class <code>extends</code> BasePage. It inherits all methods from Step 1 and adds Page-Specific logic.</p>
+        
+        <h3 style="color: #4b5563; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 20px;">Deep Dive: SignupPage - Every Word Explained</h3>
+
+        <!-- IMPORT SECTION -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>const BasePage = require('./BasePage');</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>const:</b> Declares a constant variable (one that won't change).</li>
+                <li><b>BasePage:</b> The name we give to the imported parent class.</li>
+                <li><b>require:</b> The command used to import code from another file.</li>
+                <li><b>'./BasePage':</b> The file path where the parent class is located.</li>
+            </ul>
+        </div>
+
+        <!-- CLASS DECLARATION -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>class SignupPage extends BasePage { ... }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>class:</b> Tells JS we are defining a new blueprint.</li>
+                <li><b>SignupPage:</b> The name of this specific blueprint.</li>
+                <li><b>extends:</b> Links this class to <code>BasePage</code> (Inheritance).</li>
+            </ul>
+        </div>
+
+        <!-- CONSTRUCTOR -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>constructor(page) { super(page); ... }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>super(page):</b> Transfers the browser <code>page</code> object to the Parent class so it can use it.</li>
+                <li><b>this.firstNameInput:</b> Creates a property to store the XPath.</li>
+                <li><b>"//input[@name='...']":</b> An <b>XPath</b> locator used to find the element on the HTML page.</li>
+            </ul>
+        </div>
+
+        <!-- NAVIGATION ACTION -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>async navigateToSignupForm() { await this.clickButton(...); }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>navigateToSignupForm:</b> The name of the action (User reaches the signup modal).</li>
+                <li><b>this.clickButton:</b> Uses the clicking logic we defined in <code>BasePage</code>.</li>
+            </ul>
+        </div>
+
+        <!-- COMPLEX ACTION -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>async fillBasicDetails(fName, lName, mobile) { ... }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>fName, lName, mobile:</b> Variable names for the data coming from the JSON file.</li>
+                <li><b>nextBtn:</b> A temporary variable to hold the Next button element.</li>
+                <li><b>scrollIntoViewIfNeeded():</b> Ensures the button is visible on the screen before clicking it.</li>
+                <li><b>click():</b> The final command that triggers the page transition.</li>
+            </ul>
+        </div>
+
+        <!-- EXPORT -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>module.exports = SignupPage;</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>module.exports:</b> Packaging the code so the Test file can use it.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- STEP 3: TEST CLASSES -->
+    <h2 class="section-title"><span class="section-number">3</span> Test Classes (signup.spec.js)</h2>
+    <section class="card">
+        <span class="info-tag">Execution</span>
+        <p style="margin-bottom: 20px;">This is where the actual testing happens. It pulls everything together to run a scenario.</p>
+        
+        <h3 style="color: #4b5563; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 20px;">Deep Dive: Test File Explained</h3>
+
+        <!-- IMPORTS -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>const { test, expect } = require('@playwright/test');</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>{ test, expect }:</b> Destructuring. We are taking only the <code>test</code> and <code>expect</code> tools from Playwright.</li>
+                <li><b>require('@playwright/test'):</b> Importing the core Playwright library.</li>
+            </ul>
+        </div>
+
+        <!-- PAGE & DATA IMPORTS -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>const signupData = require('../test-data/signupData.json');</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>signupData:</b> The variable holding all the names, emails, and phone numbers from your JSON file.</li>
+            </ul>
+        </div>
+
+        <!-- TEST BLOCK -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>test('Verify User...', async ({ page }) => { ... });</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>test('...'):</b> Defines the start of a test case and its name.</li>
+                <li><b>({ page }):</b> This is called a <b>Fixture</b>. Playwright automatically gives you a fresh browser tab named <code>page</code>.</li>
+            </ul>
+        </div>
+
+        <!-- INSTANTIATION -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>const signup = new SignupPage(page);</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>new SignupPage:</b> Creates a live instance of your Page Class so you can call its methods.</li>
+            </ul>
+        </div>
+
+        <!-- DATA INJECTION -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>signupData.newUser.firstName</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>.newUser.firstName:</b> Navigates through the JSON layers to find the exact value "John".</li>
+            </ul>
+        </div>
+
+        <!-- TRY/CATCH -->
+        <div class="method-box" style="border: 1px solid var(--border);">
+            <p><code>try { await page.waitForNavigation(...) } catch (e) { ... }</code></p>
+            <ul style="font-size: 0.9rem; margin-top: 10px; color: var(--text-light);">
+                <li><b>try:</b> "Try to do this action."</li>
+                <li><b>waitForNavigation:</b> Wait for the website to move to a new page after clicking signup.</li>
+                <li><b>catch (e):</b> "If it fails (timeout), don't crash the test. Just do what's in these brackets instead."</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- STEP 4: TEST DATA -->
+    <h2 class="section-title"><span class="section-number">4</span> Test Data (signupData.json)</h2>
+    <section class="card">
+        <span class="info-tag">External Input</span>
+        <p style="margin-bottom: 20px;">Instead of typing "John" directly in the code, we put it here. This is called <b>Data-Driven Testing</b>.</p>
+        
+        <div style="background: #1e1e1e; padding: 20px; border-radius: 8px; font-family: 'Fira Code', monospace; color: #d4d4d4;">
+            {<br>
+            &nbsp;&nbsp;"newUser": {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"firstName": "John",<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"email": "john@example.com"<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+        <p style="margin-top: 15px; color: var(--text-light);">The Test Class imports this using: <code>const signupData = require('../test-data/signupData.json');</code></p>
+    </section>
+
+    <!-- COMPARISON SECTION -->
+    <h2 class="section-title"><span class="section-number">5</span> Selenium vs. Playwright: The Modern Evolution</h2>
+    <section class="card">
+        <p style="margin-bottom: 25px;">You noticed a difference in how you used to write Selenium code versus this Playwright framework. Here is why the "Modern Way" is preferred in companies today:</p>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.95rem;">
+            <thead>
+                <tr style="background: #f1f5f9; text-align: left;">
+                    <th style="padding: 12px; border: 1px solid var(--border);">Feature</th>
+                    <th style="padding: 12px; border: 1px solid var(--border);">Traditional (Selenium)</th>
+                    <th style="padding: 12px; border: 1px solid var(--border);">Modern (Playwright POM)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border); font-weight: 600;">BasePage Role</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Mostly used for <b>Browser Setup</b> (initialising WebDriver, maximizing window).</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Used for <b>Action Wrapping</b> (creating reusable click/type methods).</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border); font-weight: 600;">Setup Logic</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Code is hidden in Java classes. Hard to change for different environments.</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Code is moved to <code>playwright.config.js</code>. Easy to switch browsers/headless via CLI.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border); font-weight: 600;">Maintenance</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">If a command changes, you fix it in <b>every Page Class</b>.</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">If a command changes, you fix it in <b>BasePage only</b>.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid var(--border); font-weight: 600;">Focus</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Focus on <i>technical setup</i>.</td>
+                    <td style="padding: 12px; border: 1px solid var(--border);">Focus on <i>business logic</i> and readability.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 25px; padding: 15px; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px;">
+            <h4 style="color: #92400e; margin-bottom: 8px;">💡 Pro Rationale:</h4>
+            <p style="font-size: 0.9rem; color: #92400e;">In modern companies, we want the <b>Test File</b> to read like a story. By moving interaction logic into the <code>BasePage</code>, we ensure that the framework is "future-proof." If you ever need to add logging, screenshotting, or custom waits to every click, you do it in one single method in the BasePage!</p>
+        </div>
+    </section>
+
+    <!-- DATA HANDSHAKE SECTION -->
+    <h2 class="section-title"><span class="section-number">6</span> The Data Handshake (Parameters vs Arguments)</h2>
+    <section class="card">
+        <p style="margin-bottom: 25px;">How does the code know that <code>fName</code> means "John"? It's all about the <b>Handshake</b> between the Test File and the Page File.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+            <div style="background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid var(--primary);">
+                <h4 style="color: var(--primary); margin-bottom: 10px;">1. The Sender (Test File)</h4>
+                <code style="color: var(--text); display: block; margin-bottom: 5px;">await signup.fillBasicDetails(</code>
+                <code style="color: var(--secondary); display: block;">&nbsp;&nbsp;"John", // 1st Argument</code>
+                <code style="color: var(--accent); display: block;">&nbsp;&nbsp;"Doe",  // 2nd Argument</code>
+                <code style="color: #fbbf24; display: block;">&nbsp;&nbsp;"12345" // 3rd Argument</code>
+                <code style="color: var(--text); display: block;">);</code>
+            </div>
+
+            <div style="background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid var(--secondary);">
+                <h4 style="color: var(--secondary); margin-bottom: 10px;">2. The Receiver (Page File)</h4>
+                <code style="color: var(--text); display: block; margin-bottom: 5px;">async fillBasicDetails(</code>
+                <code style="color: var(--secondary); display: block;">&nbsp;&nbsp;fName, // Placeholder 1</code>
+                <code style="color: var(--accent); display: block;">&nbsp;&nbsp;lName, // Placeholder 2</code>
+                <code style="color: #fbbf24; display: block;">&nbsp;&nbsp;mobile // Placeholder 3</code>
+                <code style="color: var(--text); display: block;">)</code>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <p style="color: var(--text-light);">They "know" each other <b>By Position (Order)</b>.</p>
+            <div style="font-size: 1.5rem; margin-top: 10px;">
+                <span style="color: var(--secondary);">1st</span> → <span style="color: var(--secondary);">1st</span> | 
+                <span style="color: var(--accent);">2nd</span> → <span style="color: var(--accent);">2nd</span> | 
+                <span style="color: #fbbf24;">3rd</span> → <span style="color: #fbbf24;">3rd</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE LIFE OF PAGE AND THIS -->
+    <h2 class="section-title"><span class="section-number">9</span> The Life of 'page' and 'this'</h2>
+    <section class="card">
+        <p style="margin-bottom: 25px;">Understanding how the browser tab (<code>page</code>) travels through your code is the "Secret Sauce" of this framework.</p>
+        
+        <div class="method-box" style="border: 1px solid var(--primary);">
+            <h4 style="color: var(--primary); margin-bottom: 10px;">1. The Birth (signup.spec.js)</h4>
+            <p style="font-size: 0.9rem;">Playwright creates a fresh browser tab and hands it to the test: <br><code>test(..., async ({ <b style="color:var(--accent);">page</b> }) => { ... })</code></p>
+        </div>
+
+        <div style="text-align: center; margin: 10px 0; color: var(--primary);">▼ Pass the baton</div>
+
+        <div class="method-box" style="border: 1px solid var(--secondary);">
+            <h4 style="color: var(--secondary); margin-bottom: 10px;">2. The Handover (Constructor)</h4>
+            <p style="font-size: 0.9rem;">You give that tab to your Page Class: <br><code>const signup = new SignupPage(<b style="color:var(--accent);">page</b>);</code></p>
+        </div>
+
+        <div style="text-align: center; margin: 10px 0; color: var(--secondary);">▼ Save it locally</div>
+
+        <div class="method-box" style="border: 1px solid var(--accent);">
+            <h4 style="color: var(--accent); margin-bottom: 10px;">3. The Ownership (this.page)</h4>
+            <p style="font-size: 0.9rem;">Inside BasePage, you save it as YOUR property: <br><code><b style="color:var(--accent);">this.page</b> = page;</code></p>
+            <p style="font-size: 0.8rem; margin-top: 10px; color: var(--text-light);"><i>Note: "this" means "Me". So "this.page" means "My Page".</i></p>
+        </div>
+
+        <div style="text-align: center; margin: 10px 0; color: var(--accent);">▼ Use it forever</div>
+
+        <div class="method-box" style="border: 1px solid var(--text);">
+            <h4 style="color: var(--text); margin-bottom: 10px;">4. The Action</h4>
+            <p style="font-size: 0.9rem;">Now, any method can use it to talk to the browser: <br><code>await <b style="color:var(--accent);">this.page</b>.goto(url);</code></p>
+        </div>
+    </section>
+
+    <!-- ARGUMENT MAPPING SECTION -->
+    <h2 class="section-title"><span class="section-number">8</span> Step-by-Step Argument Mapping</h2>
+    <section class="card">
+        <p style="margin-bottom: 25px;">This table shows exactly how every piece of data is "mapped" from your JSON file to the website fields.</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Argument (Real Data)</th>
+                    <th>Parameter (The Variable)</th>
+                    <th>The Target (XPath)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: bold; color: var(--primary);">1</td>
+                    <td><code>signupData.newUser.firstName</code></td>
+                    <td><code>fName</code></td>
+                    <td><code>this.firstNameInput</code></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; color: var(--primary);">2</td>
+                    <td><code>signupData.newUser.lastName</code></td>
+                    <td><code>lName</code></td>
+                    <td><code>this.lastNameInput</code></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; color: var(--primary);">3</td>
+                    <td><code>signupData.newUser.mobileNumber</code></td>
+                    <td><code>mobile</code></td>
+                    <td><code>this.mobileInput</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 25px; padding: 15px; border: 1px solid var(--border); border-radius: 8px; background: #0f172a;">
+            <p style="font-size: 0.95rem;"><b>Critical Rule:</b> The computer doesn't care about the name <code>fName</code>. It only cares that it is the <b>1st word</b> in the brackets. If you put <code>mobileNumber</code> as the 1st argument in the test file, it would be saved into the <code>fName</code> variable! <b>Order is everything.</b></p>
+        </div>
+    </section>
+
+    <!-- DATA JOURNEY FLOWCHART -->
+    <h2 class="section-title"><span class="section-number">7</span> The Data Journey (Flowchart)</h2>
+    <section class="card">
+        <p style="margin-bottom: 25px;">This diagram traces exactly how a piece of data (like the First Name) travels from your storage file into the actual browser field.</p>
+        
+        <div class="flow-visual" style="background: transparent; border: none;">
+            <div class="mermaid">
+                graph TD
+                    JSON[(1. signupData.json)] -->|&quot;John&quot;| SPEC[2. signup.spec.js]
+                    SPEC -->|Passes as Argument| PAGE[3. SignupPage.js]
+                    PAGE -->|Assigns to fName| BASE[4. BasePage.js]
+                    BASE -->|fillInput method| BROWSER{5. Real Browser}
+                    
+                    subgraph &quot;The Logic Layer&quot;
+                        SPEC
+                        PAGE
+                        BASE
+                    end
+
+                    style JSON fill:#fef3c7,stroke:#92400e,color:#000
+                    style SPEC fill:#dbeafe,stroke:#1e40af,color:#000
+                    style PAGE fill:#fce7f3,stroke:#9d174d,color:#000
+                    style BASE fill:#dcfce7,stroke:#166534,color:#000
+                    style BROWSER fill:#818cf8,stroke:#4f46e5,color:#fff
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 15px; background: rgba(129, 140, 248, 0.1); border-left: 4px solid var(--primary); border-radius: 4px;">
+            <p style="font-size: 0.9rem;"><b>Key Takeaway:</b> The data is never "stuck" in one file. It flows through the layers like water through pipes until it reaches the UI.</p>
+        </div>
+    </section>
+</div>
+
+<script>
+    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+</script>
+
+</body>
+</html>

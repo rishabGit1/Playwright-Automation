@@ -1,0 +1,20 @@
+{
+  "name": "playwright-automation-paxtrac",
+  "version": "1.0.0",
+  "description": "Playwright Automation Framework with Page Object Model",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:login": "npx playwright test tests/login.spec.js",
+    "test:createListing": "npx playwright test tests/createListing.spec.js",
+    "test:signup": "npx playwright test tests/signup.spec.js",
+    "test:debug": "npx playwright test --debug",
+    "test:report": "npx playwright show-report"
+  },
+  "keywords": ["playwright", "automation", "testing"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}
